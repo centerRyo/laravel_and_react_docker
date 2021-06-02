@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: docker/php74
+    ports:
+      - "30001:80"
+    volumes:
+      - ./:/var/www/
+    working_dir: "/var/www/laravel_react"
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/laravel_react/public
+      TZ: Asia/Tokyo
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./docker/my.conf:/etc/mysql/conf.d/my.conf
+    environment:
+      MYSQL_DATABASE: practice
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
+  
+  test_db:
+      image: mysql:5.7
+      ports:
+        - "3306"
+      volumes:
+        - ./docker/my.conf:/etc/mysql/conf.d/my.conf
+      environment:
+        MYSQL_DATABASE: practice
+        MYSQL_ROOT_PASSWORD: root
+        TZ: Asia/Tokyo
