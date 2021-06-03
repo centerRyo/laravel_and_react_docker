@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,14 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/user', function(Request $request) {
+    $users = App\User::all();
+
+    return response()->json(['users' => $users]);
+});
+
+Route::get('/user/{user}', function(App\User $user) {
+    return response()->json(['user' => $user]);
 });
